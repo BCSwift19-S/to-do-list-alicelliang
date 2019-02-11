@@ -11,6 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var toDoField: UITextField!
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!
     
     var toDoItem: String?
     
@@ -20,7 +21,12 @@ class DetailViewController: UIViewController {
         if let toDoItem = toDoItem {
             toDoField.text = toDoItem
         }
-
+        if let toDoFieldCount = toDoField.text?.count, toDoFieldCount > 0 {
+            saveBarButton.isEnabled = true
+        } else {
+            saveBarButton.isEnabled = false
+        }
+        toDoField.becomeFirstResponder()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -28,6 +34,20 @@ class DetailViewController: UIViewController {
             toDoItem = toDoField.text
         }
     }
+   
+    @IBAction func toDoFieldChanged(_ sender: UITextField) {
+        if let toDoFieldCount = toDoField.text?.count, toDoFieldCount > 0 {
+            saveBarButton.isEnabled = true
+        } else {
+            saveBarButton.isEnabled = false
+        }
+    }
+        
+//        if toDoField.text!.count  > 0 {
+//            saveBarButton.isEnabled = true
+//        } else {
+//            saveBarButton.isEnabled = false
+//        }
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
         let isPresentingInAddMode = presentingViewController is UINavigationController
